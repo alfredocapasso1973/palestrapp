@@ -274,7 +274,11 @@ export default function App() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator
+                screenOptions={{
+                    headerTintColor: "#111",
+                }}
+            >
                 <Stack.Screen name="Muscle Groups">
                     {(props) => <MuscleGroupsScreen {...props} groups={groups} />}
                 </Stack.Screen>
