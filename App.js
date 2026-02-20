@@ -240,6 +240,14 @@ function ExercisesScreen({ route, groups, setGroups }) {
     );
 }
 
+function BackButton({ onPress }) {
+    return (
+        <Pressable onPress={onPress} style={{ paddingHorizontal: 12, paddingVertical: 6 }}>
+            <Text style={{ color: "#F5F7FF", fontSize: 22, fontWeight: "900" }}>‹</Text>
+        </Pressable>
+    );
+}
+
 export default function App() {
     const [groups, setGroups] = React.useState(INITIAL_DATA);
     const [loaded, setLoaded] = React.useState(false);
@@ -295,10 +303,13 @@ export default function App() {
 
                 <Stack.Screen
                     name="Exercises"
-                    options={({ route }) => {
+                    options={({ route, navigation }) => {
                         const groupId = route.params?.groupId;
                         const group = groups.find((g) => g.id === groupId);
-                        return { title: group?.title ?? "Exercises" };
+                        return {
+                            title: group?.title ?? "Exercises",
+                            headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+                        };
                     }}
                 >
                     {(props) => <ExercisesScreen {...props} groups={groups} setGroups={setGroups} />}
