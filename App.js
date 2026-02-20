@@ -59,6 +59,7 @@ function MuscleGroupsScreen({ navigation, groups }) {
     return (
         <View style={styles.container}>
             <FlatList
+                contentContainerStyle={styles.listContent}
                 data={groups}
                 keyExtractor={(item) => item.id}
                 ItemSeparatorComponent={() => <View style={styles.sep} />}
@@ -169,6 +170,13 @@ function ExercisesScreen({ route, groups, setGroups }) {
                     <Pressable
                         onLongPress={() => confirmDelete(item)}
                         delayLongPress={350}
+                        onMouseDown={(e) => {
+                            if (e?.button === 2) {
+                                e.preventDefault?.();
+                                confirmDelete(item);
+                            }
+                        }}
+                        onContextMenu={(e) => e.preventDefault?.()}
                         style={styles.exerciseRow}
                     >
                         <Text style={styles.exerciseName}>{item.name}</Text>
@@ -276,7 +284,9 @@ export default function App() {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
-                    headerTintColor: "#111",
+                    headerStyle: { backgroundColor: "#0B0D10" },
+                    headerTintColor: "#F5F7FF",
+                    headerTitleStyle: { color: "#F5F7FF" },
                 }}
             >
                 <Stack.Screen name="Muscle Groups">
@@ -299,21 +309,32 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16 },
-    center: { alignItems: "center", justifyContent: "center" },
-    sep: { height: 12 },
 
-    row: { padding: 16, borderRadius: 12, backgroundColor: "#eee" },
-    rowText: { fontSize: 18, fontWeight: "600" },
+    center: { alignItems: "center", justifyContent: "center" },
+    container: { flex: 1, backgroundColor: "#0B0D10", padding: 16 },
+
+    row: {
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+        borderRadius: 16,
+        backgroundColor: "#151922",
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.06)",
+    },
+    rowText: { fontSize: 18, fontWeight: "700", color: "#F5F7FF" },
+
+    sep: { height: 10 },
 
     exerciseRow: {
         padding: 16,
-        borderRadius: 12,
-        backgroundColor: "#eee",
+        borderRadius: 16,
+        backgroundColor: "#151922",
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.06)",
         gap: 10,
     },
-    exerciseName: { fontSize: 16, fontWeight: "600" },
-
+    exerciseName: { fontSize: 16, fontWeight: "700", color: "#F5F7FF" },
+    exerciseKg: { fontSize: 16, fontWeight: "800", color: "#B6FF4D" },
     kgControls: {
         flexDirection: "row",
         alignItems: "center",
@@ -324,12 +345,14 @@ const styles = StyleSheet.create({
         width: 44,
         height: 36,
         borderRadius: 10,
-        backgroundColor: "#ddd",
+        backgroundColor: "rgba(182,255,77,0.14)",
+        borderWidth: 1,
+        borderColor: "rgba(182,255,77,0.35)",
         alignItems: "center",
         justifyContent: "center",
     },
-    kgBtnText: { fontSize: 18, fontWeight: "900" },
-    exerciseKg: { fontSize: 16, fontWeight: "800" },
+    kgBtnText: { fontSize: 18, fontWeight: "900", color: "#B6FF4D" },
+
 
     empty: { marginTop: 8, fontSize: 16, opacity: 0.7 },
 
@@ -343,10 +366,10 @@ const styles = StyleSheet.create({
     primaryFooterBtn: {
         paddingVertical: 14,
         borderRadius: 14,
-        backgroundColor: "#111",
+        backgroundColor: "#B6FF4D",
         alignItems: "center",
     },
-    primaryFooterBtnText: { color: "#fff", fontWeight: "800", fontSize: 16 },
+    primaryFooterBtnText: { color: "#0B0D10", fontWeight: "900", fontSize: 16 },
 
     addBox: { gap: 10 },
     addRow: { flexDirection: "row", gap: 10, alignItems: "center" },
@@ -375,4 +398,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#ddd",
     },
     cancelBtnText: { fontWeight: "800", fontSize: 16 },
+    listContent: { paddingBottom: 24 },
 });
