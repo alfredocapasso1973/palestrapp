@@ -2,6 +2,7 @@
   "name": "palestrapp",
   "version": "1.0.0",
   "main": "index.js",
+  "homepage": "https://alfredocapasso1973.github.io/palestrapp",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
